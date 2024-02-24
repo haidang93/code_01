@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:login_flow/app_colors.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
+import 'package:login_flow/login_flow/widget/toast_customize.dart';
 import 'package:toastification/toastification.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -75,40 +76,11 @@ class _LoginScreen extends State<LoginScreen> {
             GestureDetector(
               child: const Text("Sign up new account?"),
               onTap: () {
-                toastification.show(
-                  context: context,
-                  type: ToastificationType.error,
-                  style: ToastificationStyle.minimal,
-                  autoCloseDuration: const Duration(seconds: 5),
-                  title: const Text(
-                    'Hello, World!',
-                    style: TextStyle(color: AppColor.primary),
-                  ),
-                  description: RichText(
-                      text: const TextSpan(
-                          text: 'This is a sample toast message. ',
-                          style: TextStyle(fontSize: 18, color: Colors.black))),
-                  alignment: Alignment.topRight,
-                  direction: TextDirection.ltr,
-                  icon: const Icon(Icons.check),
-                  primaryColor: AppColor.primary,
-                  backgroundColor: Colors.white,
-                  foregroundColor: const Color.fromARGB(255, 121, 100, 100),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromARGB(6, 86, 71, 71),
-                      blurRadius: 16,
-                      offset: Offset(0, 16),
-                      spreadRadius: 0,
-                    )
-                  ],
-                  showProgressBar: false,
-                );
+                ToastCusomize.showToast(
+                    context: context,
+                    title: "Test",
+                    message: "Hello Minh Hieu is sleeping ?",
+                    isError: true);
               },
             ),
           ],
