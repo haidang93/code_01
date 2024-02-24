@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:login_flow/app_colors.dart';
+import 'package:login_flow/login_flow/widget/form_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,42 +25,25 @@ class _LoginScreen extends State<LoginScreen> {
         child: Column(
           children: [
             Expanded(child: Container()),
-            TextField(
-              onChanged: (passwordText) {},
-              style: const TextStyle(fontSize: 16.0, color: Colors.black),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                icon: const Icon(
-                  Icons.message,
-                  size: 22.0,
-                  color: Colors.black,
-                ),
-                hintText: 'Login',
-                hintStyle: const TextStyle(fontSize: 17.0),
+            FormWidget(
+              hintText: 'Login',
+              icon: const Icon(
+                Icons.message,
+                size: 22.0,
+                color: Colors.black,
               ),
-              textInputAction: TextInputAction.go,
+              onChangedFuntion: null,
+              margin: const EdgeInsets.only(top: 8),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: TextField(
-                onChanged: (passwordText) {},
-                style: const TextStyle(fontSize: 16.0, color: Colors.black),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  icon: const Icon(
-                    Icons.lock,
-                    size: 22.0,
-                    color: Colors.black,
-                  ),
-                  hintText: 'Password',
-                  hintStyle: const TextStyle(fontSize: 17.0),
-                ),
-                textInputAction: TextInputAction.go,
+            FormWidget(
+              hintText: 'Password',
+              icon: const Icon(
+                Icons.lock,
+                size: 22.0,
+                color: Colors.black,
               ),
+              onChangedFuntion: null,
+              margin: const EdgeInsets.only(top: 8),
             ),
             Container(
               margin: const EdgeInsets.only(top: 10),
