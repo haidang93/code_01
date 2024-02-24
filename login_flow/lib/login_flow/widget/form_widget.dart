@@ -17,7 +17,7 @@ class FormWidget extends StatefulWidget {
         size: 22.0,
         color: Colors.black,
       ),
-      this.margin,
+      this.margin = const EdgeInsets.only(top: 8),
       this.onChangedFuntion});
 
   @override
@@ -47,11 +47,4 @@ class _FormWidget extends State<FormWidget> {
       ),
     );
   }
-  /*
-    const Icon(
-            Icons.lock,
-            size: 22.0,
-            color: Colors.black,
-          ),
-  */
 }

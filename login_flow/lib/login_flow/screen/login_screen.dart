@@ -33,7 +33,6 @@ class _LoginScreen extends State<LoginScreen> {
                 color: Colors.black,
               ),
               onChangedFuntion: null,
-              margin: const EdgeInsets.only(top: 8),
             ),
             FormWidget(
               hintText: 'Password',
@@ -43,7 +42,6 @@ class _LoginScreen extends State<LoginScreen> {
                 color: Colors.black,
               ),
               onChangedFuntion: null,
-              margin: const EdgeInsets.only(top: 8),
             ),
             Container(
               margin: const EdgeInsets.only(top: 10),
@@ -73,7 +71,10 @@ class _LoginScreen extends State<LoginScreen> {
                     ),
             ),
             Expanded(child: Container()),
-            const Text("forgot password?"),
+            GestureDetector(
+              child: const Text("forgot password?"),
+              onTap: () {},
+            ),
           ],
         ),
       )),
