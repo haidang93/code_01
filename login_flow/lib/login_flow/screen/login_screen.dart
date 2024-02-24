@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:login_flow/app_colors.dart';
+import 'package:login_flow/login_flow/screen/home_screen_proposal.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
 import 'package:login_flow/login_flow/widget/toast_customize.dart';
-import 'package:toastification/toastification.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -81,6 +80,8 @@ class _LoginScreen extends State<LoginScreen> {
                     title: "Test",
                     message: "Hello Minh Hieu is sleeping ?",
                     isError: true);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()));
               },
             ),
           ],
