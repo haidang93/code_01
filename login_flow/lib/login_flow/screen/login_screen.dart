@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:login_flow/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -12,6 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
+  bool isLoadingLogin = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,19 +62,31 @@ class _LoginScreen extends State<LoginScreen> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 18),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                color: AppColor.primary,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 9),
-              child: const Text(
-                "Login",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.background),
-              ),
+              margin: const EdgeInsets.only(top: 10),
+              child: isLoadingLogin
+                  ? const CircularProgressIndicator()
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          isLoadingLogin = !isLoadingLogin;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9),
+                          color: AppColor.primary,
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 28, vertical: 9),
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.background),
+                        ),
+                      ),
+                    ),
             ),
             Expanded(child: Container()),
             const Text("forgot password?"),
