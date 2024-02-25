@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login_flow/login_flow/screen/home_screen_proposal.dart';
+import 'package:login_flow/login_flow/screen/login_screen.dart';
 import 'package:login_flow/utils/adapter_textField.dart';
 
 class LoginScreenController {
@@ -75,6 +77,26 @@ class LoginScreenController {
           ),
           textController: signUpConfirmPasswordTextController),
     ];
+  }
+
+  void signInFunction(context) {
+    String username = loginUsernameTextController.value.text;
+    String password = loginPasswordTextController.value.text;
+    if (username == "abc") {
+      if (password == "matkhau") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      }
+    }
+  }
+
+  void signUpFunction(context) {
+    String yourName = loginUsernameTextController.value.text;
+    String password = loginPasswordTextController.value.text;
+    String username = loginPasswordTextController.value.text;
+    String passwordConfirm = loginPasswordTextController.value.text;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => const LoginScreen()));
   }
 
   void disposeController() {

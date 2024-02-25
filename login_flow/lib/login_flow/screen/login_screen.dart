@@ -47,9 +47,14 @@ class _LoginScreen extends State<LoginScreen> {
                   ? const CircularProgressIndicator()
                   : GestureDetector(
                       onTap: () {
-                        setState(() {
-                          isLoading = !isLoading;
-                        });
+                        // setState(() {
+                        //   isLoading = !isLoading;
+                        // });
+                        if (isLoading) {
+                          controller.signInFunction(context);
+                        } else {
+                          controller.signUpFunction(context);
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
