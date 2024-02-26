@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:login_flow/app_colors.dart';
 import 'package:toastification/toastification.dart';
 
-class ToastCusomize {
- static dynamic showToast({
+class ToastCustomize {
+  static dynamic showToast({
     required context,
     bool isError = false,
     String title = "Title",

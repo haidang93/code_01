@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:login_flow/app_colors.dart';
-import 'package:login_flow/login_flow/screen/home_screen_proposal.dart';
+import 'package:login_flow/login_flow/controller/login_screen_controller.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
-import 'package:login_flow/login_flow/widget/toast_customize.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +14,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
-  bool isLoadingLogin = false;
+  bool isLoading = false;
+
+  final controller = Get.put(LoginScreenController());
+
+  @override
+  void initState() {
+    super.initState();
+    controller.initController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.disposeController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,71 +36,74 @@ class _LoginScreen extends State<LoginScreen> {
       backgroundColor: AppColor.background,
       body: SafeArea(
           child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
-        child: Column(
-          children: [
-            Expanded(child: Container()),
-            FormWidget(
-              hintText: 'Login',
-              icon: const Icon(
-                Icons.message,
-                size: 22.0,
-                color: Colors.black,
-              ),
-              onChangedFuntion: null,
-            ),
-            FormWidget(
-              hintText: 'Password',
-              icon: const Icon(
-                Icons.lock,
-                size: 22.0,
-                color: Colors.black,
-              ),
-              onChangedFuntion: null,
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: isLoadingLogin
-                  ? const CircularProgressIndicator()
-                  : GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          isLoadingLogin = !isLoadingLogin;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9),
-                          color: AppColor.primary,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 28, vertical: 9),
-                        child: const Text(
-                          "Sign in",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.background),
-                        ),
-                      ),
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
+              child: Obx(
+                () => Column(
+                  children: [
+                    Expanded(child: Container()),
+                    formWidget(),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: controller.isLoading.value
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: () async {
+                                if (controller.isLogin.value) {
+                                  controller.signInFunction(context);
+                                } else {
+                                  controller.signUpFunction(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9),
+                                  color: AppColor.primary,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 28, vertical: 9),
+                                child: Text(
+                                  controller.isLogin.value
+                                      ? "Sign in"
+                                      : "Sign up",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.background),
+                                ),
+                              ),
+                            ),
                     ),
-            ),
-            Expanded(child: Container()),
-            GestureDetector(
-              child: const Text("Sign up new account?"),
-              onTap: () {
-                ToastCusomize.showToast(
-                    context: context,
-                    title: "Test",
-                    message: "Hello Minh Hieu is sleeping ?",
-                    isError: true);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => const HomeScreen()));
-              },
-            ),
-          ],
-        ),
-      )),
+                    Expanded(child: Container()),
+                    GestureDetector(
+                      onTap: () {
+                        controller.changeState();
+                      },
+                      child: Text(controller.isLogin.value
+                          ? "Sign up new account?"
+                          : "Sign in with account"),
+                    ),
+                  ],
+                ),
+              ))),
+    );
+  }
+
+  Widget formWidget() {
+    if (controller.isLogin.value) {
+      return Column(
+        children: controller.loginForm
+            .map((e) => FormWidget(
+                  adapter: e,
+                ))
+            .toList(),
+      );
+    }
+    return Column(
+      children: controller.signUpFrom
+          .map((e) => FormWidget(
+                adapter: e,
+              ))
+          .toList(),
     );
   }
 }

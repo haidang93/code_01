@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login_flow/app_colors.dart';
 import 'package:login_flow/login_flow/screen/login_screen.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
