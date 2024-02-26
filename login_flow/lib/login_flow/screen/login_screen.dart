@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:login_flow/app_colors.dart';
 import 'package:login_flow/login_flow/controller/login_screen_controller.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
@@ -14,9 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreen extends State<LoginScreen> {
   bool isLoading = false;
-  bool isLogin = true;
 
-  LoginScreenController controller = LoginScreenController();
+  final controller = Get.put(LoginScreenController());
 
   @override
   void initState() {
@@ -36,66 +36,60 @@ class _LoginScreen extends State<LoginScreen> {
       backgroundColor: AppColor.background,
       body: SafeArea(
           child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
-        child: Column(
-          children: [
-            Expanded(child: Container()),
-            formWidget(),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              child: isLoading
-                  ? const CircularProgressIndicator()
-                  : GestureDetector(
-                      onTap: () {
-                        // setState(() {
-                        //   isLoading = !isLoading;
-                        // });
-                        if (isLoading) {
-                          controller.signInFunction(context);
-                        } else {
-                          controller.signUpFunction(context);
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9),
-                          color: AppColor.primary,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 28, vertical: 9),
-                        child: Text(
-                          isLogin ? "Sign in" : "Sign up",
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.background),
-                        ),
-                      ),
+              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
+              child: Obx(
+                () => Column(
+                  children: [
+                    Expanded(child: Container()),
+                    formWidget(),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: controller.isLoading.value
+                          ? const CircularProgressIndicator()
+                          : GestureDetector(
+                              onTap: () async {
+                                if (controller.isLogin.value) {
+                                  controller.signInFunction(context);
+                                } else {
+                                  controller.signUpFunction(context);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9),
+                                  color: AppColor.primary,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 28, vertical: 9),
+                                child: Text(
+                                  controller.isLogin.value
+                                      ? "Sign in"
+                                      : "Sign up",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColor.background),
+                                ),
+                              ),
+                            ),
                     ),
-            ),
-            Expanded(child: Container()),
-            GestureDetector(
-              child: Text(
-                  isLogin ? "Sign up new account?" : "Sign in with account"),
-              onTap: () {
-                // ToastCusomize.showToast(
-                //     context: context,
-                //     title: "Test",
-                //     message: "Hello Minh Hieu is sleeping ?",
-                //     isError: true);
-                setState(() {
-                  isLogin = !isLogin;
-                });
-              },
-            ),
-          ],
-        ),
-      )),
+                    Expanded(child: Container()),
+                    GestureDetector(
+                      onTap: () {
+                        controller.changeState();
+                      },
+                      child: Text(controller.isLogin.value
+                          ? "Sign up new account?"
+                          : "Sign in with account"),
+                    ),
+                  ],
+                ),
+              ))),
     );
   }
 
   Widget formWidget() {
-    if (isLogin) {
+    if (controller.isLogin.value) {
       return Column(
         children: controller.loginForm
             .map((e) => FormWidget(
