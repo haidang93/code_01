@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login_flow/app_colors.dart';
 import 'package:login_flow/login_flow/controller/login_screen_controller.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
+
+import '../../app_colors.dart';
+import '../../utils/helper_functions.dart';
+import 'home_screen_proposal.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,59 +35,63 @@ class _LoginScreen extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.background,
-      body: SafeArea(
-          child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
-              child: Obx(
-                () => Column(
-                  children: [
-                    Expanded(child: Container()),
-                    formWidget(),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      child: controller.isLoading.value
-                          ? const CircularProgressIndicator()
-                          : GestureDetector(
-                              onTap: () async {
-                                if (controller.isLogin.value) {
-                                  controller.signInFunction(context);
-                                } else {
-                                  controller.signUpFunction(context);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(9),
-                                  color: AppColor.primary,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 28, vertical: 9),
-                                child: Text(
-                                  controller.isLogin.value
-                                      ? "Sign in"
-                                      : "Sign up",
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.background),
+    return GestureDetector(
+      onTap: () => removeFocus(context),
+      child: Scaffold(
+        backgroundColor: AppColor.background,
+        body: SafeArea(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 9, horizontal: 15),
+                child: Obx(
+                  () => Column(
+                    children: [
+                      Expanded(child: Container()),
+                      formWidget(),
+                      Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: controller.isLoading.value
+                            ? const CircularProgressIndicator()
+                            : GestureDetector(
+                                onTap: () async {
+                                  if (controller.isLogin.value) {
+                                    controller.signInFunction(context);
+                                  } else {
+                                    controller.signUpFunction(context);
+                                  }
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(9),
+                                    color: AppColor.primary,
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 28, vertical: 9),
+                                  child: Text(
+                                    controller.isLogin.value
+                                        ? "Sign in"
+                                        : "Sign up",
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColor.background),
+                                  ),
                                 ),
                               ),
-                            ),
-                    ),
-                    Expanded(child: Container()),
-                    GestureDetector(
-                      onTap: () {
-                        controller.changeState();
-                      },
-                      child: Text(controller.isLogin.value
-                          ? "Sign up new account?"
-                          : "Sign in with account"),
-                    ),
-                  ],
-                ),
-              ))),
+                      ),
+                      Expanded(child: Container()),
+                      GestureDetector(
+                        onTap: () {
+                          controller.changeState();
+                        },
+                        child: Text(controller.isLogin.value
+                            ? "Sign up new account?"
+                            : "Sign in with account"),
+                      ),
+                    ],
+                  ),
+                ))),
+      ),
     );
   }
 

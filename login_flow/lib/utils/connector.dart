@@ -43,8 +43,9 @@ class FetchClient {
       }
     } else {
       return Response(
+          data: {},
           statusCode: -1,
-          statusMessage: "Nullable reponse",
+          statusMessage: "Connection error",
           requestOptions: RequestOptions());
     }
   }

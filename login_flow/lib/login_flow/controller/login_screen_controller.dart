@@ -35,18 +35,19 @@ class LoginScreenController extends GetxController {
     String username = loginUsernameTextController.value.text;
     String password = loginPasswordTextController.value.text;
     isLoading.value = true;
-    bool isLoginHome =
-        await provider.login(username: username, password: password);
+    final res = await provider.login(username: username, password: password);
     isLoading.value = false;
-    if (isLoginHome) {
-      Navigator.push(
+    if (res.success) {
+      // run function save token to local storage
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     } else {
       ToastCustomize.showToast(
-          context: context,
-          title: "Failure",
-          message: "Please enter your correct account!",
-          isError: true);
+        context: context,
+        title: "Failure",
+        message: res.message,
+        isError: true,
+      );
       clearTextController();
     }
   }
@@ -72,6 +73,8 @@ class LoginScreenController extends GetxController {
         firstName: name,
       );
       isLoading.value = true;
+      Map<String, dynamic> aa = {};
+      aa['type'];
       final rs = await provider.signUp(data: user);
       isLoading.value = false;
       if (rs) {
