@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:login_flow/app_colors.dart';
-import 'package:login_flow/login_flow/screen/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,8 +12,7 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (_) => const LoginScreen()));
+            Get.back();
           },
           child: Container(
             decoration: BoxDecoration(

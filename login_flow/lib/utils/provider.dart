@@ -31,15 +31,6 @@ class UserProvider extends FetchClient {
         code: response.statusCode ?? 0,
         message: response.data['error'] ?? response.statusMessage,
       );
-      // if (response.statusCode == 200) {
-      //   final userData = response.data;
-      //   // User user = User.fromJson(userData);  Might we use this data, save it into storage or set env :v
-      //   return true;
-      // } else if (response.statusCode == 404) {
-      //   return false;
-      // } else {
-      //   throw response.data['error'] ?? '';
-      // }
     } catch (e) {
       return Result(
         result: '',
@@ -49,18 +40,24 @@ class UserProvider extends FetchClient {
     }
   }
 
-  Future<bool> signUp({required User data}) async {
-    final Response response = await super.postData(path: 'users', params: {
-      "username": data.username,
-      "password": data.password,
-      "fisrtName": data.firstName,
-    });
-    print(data.toJson());
-    if (response.statusCode == 201) {
-      return true;
-    } else {
-      print("reponse  error : $response ");
-      return false;
+  Future<Result<String>> signUp({required User data}) async {
+    try {
+      final Response response = await super.postData(path: 'users', params: {
+        "username": data.username,
+        "password": data.password,
+        "fisrtName": data.firstName,
+      });
+      return Result(
+        result: response.data['token'] ?? '',
+        code: response.statusCode ?? 0,
+        message: response.data['error'] ?? response.statusMessage,
+      );
+    } catch (e) {
+      return Result(
+        result: '',
+        code: 0,
+        message: "Something went wrong. Please try again later!",
+      );
     }
   }
 }

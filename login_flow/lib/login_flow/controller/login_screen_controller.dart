@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login_flow/login_flow/screen/home_screen_proposal.dart';
 import 'package:login_flow/login_flow/widget/toast_customize.dart';
 import 'package:login_flow/model/user.dart';
 import 'package:login_flow/utils/adapter_textField.dart';
@@ -39,8 +38,7 @@ class LoginScreenController extends GetxController {
     isLoading.value = false;
     if (res.success) {
       // run function save token to local storage
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+      // Navigator.pushReplacement(
     } else {
       ToastCustomize.showToast(
         context: context,
@@ -77,7 +75,7 @@ class LoginScreenController extends GetxController {
       aa['type'];
       final rs = await provider.signUp(data: user);
       isLoading.value = false;
-      if (rs) {
+      if (rs.success) {
         clearTextController();
         ToastCustomize.showToast(
             context: context,
@@ -171,3 +169,7 @@ class LoginScreenController extends GetxController {
     ];
   }
 }
+
+void disposeController() {}
+
+void changeState() {}

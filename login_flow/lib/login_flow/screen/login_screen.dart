@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:login_flow/app_colors.dart';
 import 'package:login_flow/login_flow/controller/login_screen_controller.dart';
 import 'package:login_flow/login_flow/widget/form_widget.dart';
-
-import '../../app_colors.dart';
-import '../../utils/helper_functions.dart';
-import 'home_screen_proposal.dart';
+import 'package:login_flow/utils/helper_function.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -57,7 +55,7 @@ class _LoginScreen extends State<LoginScreen> {
                                   if (controller.isLogin.value) {
                                     controller.signInFunction(context);
                                   } else {
-                                    controller.signUpFunction(context);
+                                    controller.signInFunction(context);
                                   }
                                 },
                                 child: Container(

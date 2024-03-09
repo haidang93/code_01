@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -28,11 +30,23 @@ class FetchClient {
     return connectivityResult != ConnectivityResult.none;
   }
 
+  Future<bool> hasInternet() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+      return false;
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
+
   Future<Response> getData(
       {String? domainApp,
       required String path,
       Map<String, dynamic>? params}) async {
-    if (await _checkInternetConnection()) {
+    if (await hasInternet()) {
       try {
         Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
             queryParameters: params, options: options());
@@ -52,7 +66,7 @@ class FetchClient {
 
   Future<Response> postData(
       {String? domainApp, required String path, dynamic params}) async {
-    if (await _checkInternetConnection()) {
+    if (await hasInternet()) {
       try {
         Response<dynamic> result = await dio.post((domainApp ?? domain) + path,
             data: params, options: options());
